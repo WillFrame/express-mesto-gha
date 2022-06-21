@@ -24,7 +24,7 @@ const createUser = (req, res) => {
     .then(user => res.send( {data: user} ))
     .catch(err => {
       if (err.name === 'ValidationError') {
-        res.status(404).send({ message: 'Переданы некорректные данные при создании пользователя.'});
+        res.status(400).send({ message: 'Переданы некорректные данные при создании пользователя.'});
       } else {
         res.status(500).send({ message: 'Произошла ошибка'});
       }
@@ -37,7 +37,7 @@ const updateProfile = (req, res) => {
     .then(user => res.send( {data: user} ))
     .catch(err => {
       if (err.name === 'ValidationError') {
-        res.status(404).send({ message: 'Переданы некорректные данные при создании пользователя.'});
+        res.status(400).send({ message: 'Переданы некорректные данные при создании пользователя.'});
       } else {
         if (err.name === 'CastError') {
           res.status(404).send({ message: 'Пользователь по указанному _id не найден.'});
@@ -54,7 +54,7 @@ const updateAvatar = (req, res) => {
     .then(user => res.send( {data: user} ))
     .catch(err => {
       if (err.name === 'ValidationError') {
-        res.status(404).send({ message: 'Переданы некорректные данные при создании пользователя.'});
+        res.status(400).send({ message: 'Переданы некорректные данные при создании пользователя.'});
       } else {
         if (err.name === 'CastError') {
           res.status(404).send({ message: 'Пользователь по указанному _id не найден.'});
