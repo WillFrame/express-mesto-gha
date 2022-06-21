@@ -21,7 +21,13 @@ const createCard = (req, res) => {
 
 const deleteCard = (req, res) => {
   Card.findByIdAndDelete(req.params.cardId)
-    .then(card => res.send( {data: card} ))
+    .then(card => {
+      if (!card) {
+        res.status(404).send({ message: 'Передан несуществующий _id карточки.'});
+        return;
+      }
+      res.send( {data: card} );
+    })
     .catch(err => {
       if (err.name === 'CastError') {
         res.status(404).send({ message: 'Карточка с указанным _id не найдена.'});
