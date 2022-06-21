@@ -34,7 +34,7 @@ const deleteCard = (req, res) => {
 const likeCard = (req, res) => {
   Card.findByIdAndUpdate(req.params.cardId, { $addToSet: { likes: req.user._id } }, { new: true })
     .then(card => {
-      if (err.name === 'CastError') {
+      if (!card) {
         res.status(404).send({ message: 'Передан несуществующий _id карточки.'});
         return;
       }
@@ -52,7 +52,7 @@ const likeCard = (req, res) => {
 const dislikeCard = (req, res) => {
   Card.findByIdAndUpdate(req.params.cardId, { $pull: { likes: req.user._id } }, { new: true })
     .then(card => {
-      if (err.name === 'CastError') {
+      if (!card) {
         res.status(404).send({ message: 'Передан несуществующий _id карточки.'});
         return;
       }
