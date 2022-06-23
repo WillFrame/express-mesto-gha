@@ -4,6 +4,7 @@ const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 const ValidationError = require('../errors/ValidationError');
 const UniqueEmailError = require('../errors/UniqueEmailError');
+const UnauthorizedError = require('../errors/UnauthorizedError ');
 
 const getUsers = (req, res, next) => {
   User.find({})
@@ -96,7 +97,7 @@ const login = (req, res, next) => {
       const token = jwt.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' });
       res.send({ token });
     })
-    .catch(next);
+    .catch(() => next(new UnauthorizedError('Ошибка авторизации.')));
 };
 
 const getUserInfo = (req, res, next) => {
